@@ -11,7 +11,9 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp,
+    DeviceOrientation.landscapeLeft, // 允许横向左
+    DeviceOrientation.landscapeRight]);
 
     return Material(
       color: Colors.transparent,

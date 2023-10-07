@@ -110,56 +110,107 @@ class _NowPlayingScreenState extends State<NowPlayingScreen>
     );
 
     return Stack(
-      children: <Widget>[
-        const GradientDecoratedContainer(),
-        frostBackground,
-        Container(color: Colors.black38),
-        Container(
-          padding: const EdgeInsets.all(24),
-          child: ConstrainedBox(
-            constraints: BoxConstraints.tightFor(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                thumbnail,
-                infoPane,
-                const AudioControls(),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    const VolumeSlider(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        const RepeatModeButton(),
-                        IconButton(
-                          onPressed: () => showInfoSheet(context, song: song),
-                          icon: Icon(
-                            CupertinoIcons.text_quote,
-                            color: bottomIconColor,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () =>
-                              Navigator.of(context, rootNavigator: true)
-                                  .pushNamed(QueueScreen.routeName),
-                          icon: Icon(
-                            CupertinoIcons.list_number,
-                            color: bottomIconColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+  children: <Widget>[
+    const GradientDecoratedContainer(),
+    frostBackground,
+    Container(color: Colors.black38),
+    Container(
+      padding: const EdgeInsets.all(24),
+      child: ConstrainedBox(
+        constraints: BoxConstraints.tightFor(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
         ),
-      ],
-    );
+        child: MediaQuery.of(context).orientation == Orientation.portrait
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  thumbnail, // 在纵向模式下显示 thumbnail
+                  infoPane,
+                  const AudioControls(),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const VolumeSlider(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          const RepeatModeButton(),
+                          IconButton(
+                            onPressed: () => showInfoSheet(context, song: song),
+                            icon: Icon(
+                              CupertinoIcons.text_quote,
+                              color: bottomIconColor,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () =>
+                                Navigator.of(context, rootNavigator: true)
+                                    .pushNamed(QueueScreen.routeName),
+                            icon: Icon(
+                              CupertinoIcons.list_number,
+                              color: bottomIconColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              )
+            : Row(
+                children: <Widget>[
+                  // 第一列，显示 thumbnail
+                  thumbnail,
+                  // 第二列，其他组件
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(36.0), // 这里添加内边距
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          infoPane,
+                          const AudioControls(),
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              const VolumeSlider(),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  const RepeatModeButton(),
+                                  IconButton(
+                                    onPressed: () =>
+                                        showInfoSheet(context, song: song),
+                                    icon: Icon(
+                                      CupertinoIcons.text_quote,
+                                      color: bottomIconColor,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () => Navigator.of(context,
+                                            rootNavigator: true)
+                                        .pushNamed(QueueScreen.routeName),
+                                    icon: Icon(
+                                      CupertinoIcons.list_number,
+                                      color: bottomIconColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+      ),
+    ),
+  ],
+);
+
   }
 }
